@@ -75,4 +75,26 @@ public class IniFileLoginAndLogoutTest {
         Assert.assertEquals("登录失败", Boolean.TRUE, subject.isAuthenticated());
 
     }
+
+    @Test
+    public void testIniFileLoginAndLogoutT_jdbcrealm() {
+        Factory<SecurityManager> securityManagerFactory = new IniSecurityManagerFactory("classpath:chapter2/shiro-jdbc-realm.ini");
+        SecurityManager securityManager = securityManagerFactory.getInstance();
+        SecurityUtils.setSecurityManager(securityManager);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken("zhang", "123456");
+        try {
+            subject.login(usernamePasswordToken);
+        } catch (AuthenticationException e) {
+            System.out.println("登录失败");
+            e.printStackTrace();
+        }
+        System.out.println("登录成功");
+
+        Assert.assertEquals("登录失败", Boolean.TRUE, subject.isAuthenticated());
+
+        subject.logout();
+//        Assert.assertEquals("登录失败", Boolean.TRUE, subject.isAuthenticated());
+
+    }
 }
