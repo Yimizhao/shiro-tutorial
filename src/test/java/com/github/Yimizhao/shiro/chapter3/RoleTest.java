@@ -1,5 +1,6 @@
 package com.github.Yimizhao.shiro.chapter3;
 
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -57,5 +58,25 @@ public class RoleTest extends BaseTest {
         subject().checkRole("role2");
         subject().checkRole("role3");
         subject().checkRoles("role3", "role4");
+    }
+
+    @Test
+    public void testHasRolePermission() {
+        login("chapter3/shiro-permission.ini", "zhao", "123456");
+        Assert.assertTrue(subject().isPermitted("user:create"));
+        Assert.assertTrue(subject().isPermitted("user:delete"));
+        Assert.assertTrue(subject().isPermitted("user:update"));
+        Assert.assertFalse(subject().isPermitted("user:select"));
+//        Assert.assertTrue(subject().isPermitted("user:select"));
+    }
+
+    @Test(expected = AuthorizationException.class)
+    public void testCheckRolePermission() {
+        login("chapter3/shiro-permission.ini", "zhao", "123456");
+        subject().checkPermission("user:create");
+        subject().checkPermission("user:delete");
+        subject().checkPermission("user:update");
+        // 无“user:select”权限，抛AuthorizationException异常
+        subject().checkPermission("user:select");
     }
 }

@@ -13,7 +13,7 @@ import org.junit.After;
 public abstract class BaseTest {
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         ThreadContext.unbindSubject();
     }
 
@@ -22,10 +22,9 @@ public abstract class BaseTest {
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        //3、得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
-        Subject subject = SecurityUtils.getSubject();
         try {
-            subject.login(token);
+            //3、得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
+            subject().login(token);
         } catch (AuthenticationException e) {
             System.out.println("登录失败");
             e.printStackTrace();
