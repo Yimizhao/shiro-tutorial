@@ -79,4 +79,15 @@ public class RoleTest extends BaseTest {
         // 无“user:select”权限，抛AuthorizationException异常
         subject().checkPermission("user:select");
     }
+
+    @Test
+    public void name() {
+//        String s = "+资源字符串+权限位+实例ID";
+        String s = "++";
+        String[] ss = s.split("\\+");
+        System.out.println(ss.length);
+        for (String s1 : ss) {
+            System.out.println("s1: " + s1);
+        }
+    }
 }

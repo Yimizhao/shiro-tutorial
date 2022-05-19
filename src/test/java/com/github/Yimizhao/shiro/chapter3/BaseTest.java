@@ -10,7 +10,7 @@ import org.apache.shiro.util.Factory;
 import org.apache.shiro.util.ThreadContext;
 import org.junit.After;
 
-public abstract class BaseTest {
+public class BaseTest {
 
     @After
     public void tearDown() {
